@@ -3,7 +3,10 @@ import { ArrowRight, Sparkles, Zap, FileText, PlayIcon } from "lucide-react"
 import Link from "next/link"
 import SiteHeader from "@/components/site-header"
 import Image from "next/image"
+import { SignInButton } from "@clerk/nextjs"
+import { auth } from "@clerk/nextjs/server"
 export default async function LandingPage() {
+  const { userId } = await auth();
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
@@ -16,8 +19,9 @@ export default async function LandingPage() {
           </div>
 
           <h1 className="text-5xl sm:text-6xl font-bold mb-6 text-balance leading-tight">
-            Create Stunning 
-            <span className="text-primary"> Presentations in Seconds</span>
+            Create Stunning
+            <span className="text-primary"> Presentations </span>
+            in Seconds
           </h1>
 
           <p className="text-xl text-muted-foreground mb-8 text-balance max-w-2xl mx-auto">
@@ -26,12 +30,20 @@ export default async function LandingPage() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Link href="/signup">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer">
-                Start Creating Free
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </Link>
+            {
+              !userId ?
+                <SignInButton mode='modal'>
+                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer">
+                    Start Creating Free
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </SignInButton>
+                :
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer">
+                  Workspace
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+            }
             <Button size="lg" variant="outline" className="cursor-pointer">
               Watch Demo <PlayIcon className="w-4 h-4 ml-2" />
             </Button>

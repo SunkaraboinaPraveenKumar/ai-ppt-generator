@@ -7,7 +7,7 @@ import { auth } from "@clerk/nextjs/server"
 import { SiteNav } from "./site-nav"
 
 export default async function SiteHeader() {
-  const { userId } = await auth()
+  const { userId } = await auth();
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border">
@@ -35,12 +35,7 @@ export default async function SiteHeader() {
           ) : (
             <>
               <Link href="/login">
-                <Button variant="ghost" size="sm">
-                  Sign In
-                </Button>
-              </Link>
-              <Link href="/signup">
-                <Button size="sm" className="bg-primary hover:bg-primary/90">
+                <Button variant="ghost" size="sm" className="cursor-pointer">
                   Get Started
                 </Button>
               </Link>

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { FileText, Trash2, Edit2, Share2 } from "lucide-react"
 import Link from "next/link"
 import { formatDistanceToNow } from "date-fns"
+import Image from "next/image"
 
 interface ProjectCardProps {
   project: {
@@ -23,7 +24,12 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
       <Link href={`/workspace/editor/${project.id}`}>
         <div className="mb-4">
           <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-            <FileText className="w-6 h-6 text-primary" />
+            <Image
+            src={"/power-point.png"}
+            alt="Project Icon"
+            width={30}
+            height={30}
+            />
           </div>
           <h3 className="text-lg font-semibold mb-1 group-hover:text-primary transition-colors">{project.title}</h3>
           <p className="text-sm text-muted-foreground line-clamp-2">{project.description}</p>

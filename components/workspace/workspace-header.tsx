@@ -1,10 +1,10 @@
 "use client"
 import { UserButton, useUser } from "@clerk/nextjs"
-import { Sparkles, Sun, Moon } from "lucide-react"
+import { Sparkles, Sun, Moon, Diamond } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
-import { Button } from "../ui/button"
+import CreditsDisplay from "./credits-display"
 
 export function WorkspaceHeader() {
   const { user } = useUser()
@@ -27,7 +27,11 @@ export function WorkspaceHeader() {
         </Link>
 
         <div className="flex items-center gap-4">
-          <span className="text-sm text-muted-foreground">Welcome, {user?.fullName}</span>
+          {/* show remaining credits with a diamond icon */}
+          <div className="flex items-center gap-2">
+            <Diamond className="w-4 h-4 text-primary-foreground" />
+            <CreditsDisplay userId={user?.id} />
+          </div>
           {/* Theme toggle (only show after mount to avoid SSR mismatch) */}
           {mounted && (
             <button
