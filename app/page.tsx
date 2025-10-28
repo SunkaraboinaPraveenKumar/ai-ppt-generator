@@ -39,10 +39,12 @@ export default async function LandingPage() {
                   </Button>
                 </SignInButton>
                 :
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer">
-                  Workspace
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
+                <Link href={"/workspace"}>
+                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer">
+                    Workspace
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </Link>
             }
             <Button size="lg" variant="outline" className="cursor-pointer">
               Watch Demo <PlayIcon className="w-4 h-4 ml-2" />

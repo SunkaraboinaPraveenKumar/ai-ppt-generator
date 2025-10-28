@@ -13,12 +13,14 @@ interface EditorHeaderProps {
   slideCount?: number
   onGenerateWithAI?: () => void
   onDesignStyle?: () => void
+  slides?: Array<any>
 }
 
 export function EditorHeader({
   projectTitle,
   onTitleChange,
   slideCount = 0,
+  slides,
   onGenerateWithAI,
   onDesignStyle,
 }: EditorHeaderProps) {
@@ -85,7 +87,8 @@ export function EditorHeader({
         open={showExportDialog}
         onOpenChange={setShowExportDialog}
         projectTitle={projectTitle}
-        slideCount={slideCount}
+        slideCount={slides?.length ?? slideCount}
+        slides={slides}
       />
     </>
   )

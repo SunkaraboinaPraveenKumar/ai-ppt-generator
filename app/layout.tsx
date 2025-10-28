@@ -23,6 +23,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
+        <head>
+          <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+        </head>
         <body className={`${geistSans.className} bg-background text-foreground`}>
           <ThemeProvider attribute="class" defaultTheme="system">
             {children}

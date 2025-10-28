@@ -8,6 +8,7 @@ import { WorkspaceHeader } from "@/components/workspace/workspace-header"
 import { ProjectCard } from "@/components/workspace/project-card"
 import { NewProjectDialog } from "@/components/workspace/new-project-dialog"
 import { Input } from "@/components/ui/input"
+import Loading from "./loading"
 
 interface Project {
   id: string
@@ -121,9 +122,7 @@ export default function WorkspacePage() {
 
         {/* Projects Grid */}
         {loading ? (
-          <Card className="p-12 text-center">
-            <p className="text-muted-foreground">Loading projects...</p>
-          </Card>
+          <Loading/>
         ) : filteredProjects.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProjects.map((project) => (

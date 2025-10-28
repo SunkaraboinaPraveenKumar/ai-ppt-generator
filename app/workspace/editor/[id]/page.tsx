@@ -8,6 +8,7 @@ import { AIGenerationDialog } from "@/components/editor/ai-generation-dialog"
 import { DesignStyleSelector } from "@/components/editor/design-style-selector"
 import { FloatingActionTool } from "@/components/editor/floating-action-tool"
 import { ImageTransformDialog } from "@/components/editor/image-transform-dialog"
+import Loading from "../../loading"
 
 interface Slide {
   id: string
@@ -126,7 +127,9 @@ export default function EditorPage(props: { params: any }) {
   }
 
   if (loading) {
-    return <div className="min-h-screen bg-background flex items-center justify-center">Loading...</div>
+    return(
+      <Loading/>
+    )
   }
 
   return (

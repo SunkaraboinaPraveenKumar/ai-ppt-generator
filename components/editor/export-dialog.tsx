@@ -10,57 +10,48 @@ interface ExportDialogProps {
   onOpenChange: (open: boolean) => void
   projectTitle: string
   slideCount: number
+  slides?: Array<{ title: string; content: string; notes?: string }>
 }
 
-export function ExportDialog({ open, onOpenChange, projectTitle, slideCount }: ExportDialogProps) {
+export function ExportDialog({ open, onOpenChange, projectTitle, slideCount, slides }: ExportDialogProps) {
   const [isExporting, setIsExporting] = useState(false)
   const [exportFormat, setExportFormat] = useState<"pdf" | "pptx">("pdf")
 
   const handleExport = async () => {
     setIsExporting(true)
     try {
-      const response = await fetch("/api/export", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          projectId: "current-project",
-          format: exportFormat,
-          slides: [],
-          title: projectTitle,
+      // Always use server-side export for both PDF and PPTX
+      const response = await fetch('/api/export', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          projectId: 'current-project', 
+          format: exportFormat, 
+          slides: slides ?? [], 
+          title: projectTitle 
         }),
       })
 
       if (!response.ok) {
-        throw new Error("Export failed")
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || 'Export failed')
       }
 
-      const data = await response.json()
-
-      if (exportFormat === "pptx") {
-        const blob = new Blob([JSON.stringify(data.data)], {
-          type: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-        })
-        const url = window.URL.createObjectURL(blob)
-        const a = document.createElement("a")
-        a.href = url
-        a.download = data.fileName
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(url)
-        document.body.removeChild(a)
-      } else {
-        // PDF download
-        const link = document.createElement("a")
-        link.href = data.downloadUrl
-        link.download = data.fileName
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-      }
+      // Handle binary download for both formats
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `${projectTitle || 'presentation'}.${exportFormat}`
+      document.body.appendChild(a)
+      a.click()
+      window.URL.revokeObjectURL(url)
+      document.body.removeChild(a)
 
       onOpenChange(false)
     } catch (error) {
-      console.error("Export failed:", error)
+      console.error('Export failed:', error)
+      alert(`Export failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
     } finally {
       setIsExporting(false)
     }

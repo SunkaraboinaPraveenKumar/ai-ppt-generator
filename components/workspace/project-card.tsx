@@ -23,12 +23,14 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
     <Card className="p-6 hover:border-primary/50 transition-colors group cursor-pointer">
       <Link href={`/workspace/editor/${project.id}`}>
         <div className="mb-4">
-          <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+          <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-all duration-300 ease-out transform group-hover:scale-105 group-hover:-translate-y-1">
             <Image
-            src={"/power-point.png"}
-            alt="Project Icon"
-            width={30}
-            height={30}
+              src={'/power-point-1.png'}
+              alt="Project Icon"
+              width={30}
+              height={30}
+              className="w-6 h-6 transition-transform duration-300 ease-out group-hover:scale-110"
+              loading="lazy"
             />
           </div>
           <h3 className="text-lg font-semibold mb-1 group-hover:text-primary transition-colors">{project.title}</h3>
